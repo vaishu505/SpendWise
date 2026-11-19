@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpendWise | Expense Tracker</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <i class="fa-solid fa-wallet"></i>
+                <h2>Spend<span>Wise</span></h2>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <p class="nav-heading">MENU</p>
+
+                <a href="#" class="nav-link active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="#transactions" class="nav-link">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    <span>Transactions</span>
+                </a>
+
+                <a href="#budgets" class="nav-link">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Budgets</span>
+                </a>
+
+                <a href="#analytics" class="nav-link">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </a>
+
+                <p class="nav-heading">PREFERENCES</p>
+
+                <a href="#settings" class="nav-link">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="user-profile">
+                    <div class="user-avatar">U</div>
+                    <div class="user-info">
+                        <h4>Your Name</h4>
+                        <p>Personal Account</p>
+                    </div>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOP HEADER -->
+            <header class="top-header">
+
+                <div class="header-left">
+                    <h2>Dashboard</h2>
+                    <p>Welcome back! Here's your financial overview.</p>
+                </div>
+
+                <div class="header-right">
+
+                    <button class="icon-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+
+                    <div class="header-date">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span id="current-date">Today</span>
+                    </div>
+
+                </div>
+
+            </header>
+
+            <!-- DASHBOARD CONTENT -->
+            <section class="dashboard-content">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Financial Overview</h2>
+                        <p>Track and manage your money in one place.</p>
+                    </div>
+
+                    <button class="add-transaction-btn" id="add-transaction-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Transaction
+                    </button>
+
+                </div>
+
+                <!-- SUMMARY CARDS -->
+                <div class="summary-grid">
+
+                    <div class="summary-card balance-card">
+                        <div class="card-top">
+                            <div class="card-icon">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <span class="card-label">Total Balance</span>
+                        </div>
+                        <h2 id="total-balance">₹0.00</h2>
+                        <p>Your available balance</p>
+                    </div>
+
+                    <div class="summary-card income-card">
+                        <div class="card-top">
+                            <div class="card-icon">
+                                <i class="fa-solid fa-arrow-down"></i>
+                            </div>
+                            <span class="card-label">Total Income</span>
+                        </div>
+                        <h2 id="total-income">₹0.00</h2>
+                        <p>Money received</p>
+                    </div>
+
+                    <div class="summary-card expense-card">
+                        <div class="card-top">
+                            <div class="card-icon">
+                                <i class="fa-solid fa-arrow-up"></i>
+                            </div>
+                            <span class="card-label">Total Expenses</span>
+                        </div>
+                        <h2 id="total-expenses">₹0.00</h2>
+                        <p>Money spent</p>
+                    </div>
+
+                </div>
+
+                <!-- BUDGET MANAGEMENT -->
+                <section class="budget-section" id="budgets">
+
+                    <div class="section-heading">
+                        <div>
+                            <h2>Budget Management</h2>
+                            <p>Set monthly spending limits and keep your expenses under control.</p>
+                        </div>
+                    </div>
+
+                    <!-- ADD BUDGET FORM -->
+                    <div class="dashboard-card budget-form-card">
+
+                        <div class="card-heading">
+                            <div>
+                                <h3>Create Monthly Budget</h3>
+                                <p>Set a spending limit for an expense category.</p>
+                            </div>
+                        </div>
+
+                        <form id="budget-form" class="budget-form">
+
+                            <div class="form-group">
+                                <label for="budget-category">Expense Category</label>
+
+                                <select id="budget-category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Food">Food & Dining</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Transport">Transportation</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Bills">Bills & Utilities</option>
+                                    <option value="Health">Healthcare</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="budget-amount">Budget Amount</label>
+
+                                <input
+                                    type="number"
+                                    id="budget-amount"
+                                    placeholder="Enter budget amount"
+                                    min="0.01"
+                                    step="0.01"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="budget-month">Budget Month</label>
+
+                                <input
+                                    type="month"
+                                    id="budget-month"
+                                    required
+                                >
+                            </div>
+
+                            <button type="submit" class="add-transaction-btn">
+                                <i class="fa-solid fa-plus"></i>
+                                Save Budget
+                            </button>
+
+                        </form>
+
+                        <p id="budget-form-message" class="currency-save-message" aria-live="polite"></p>
+
+                    </div>
+
+                    <!-- BUDGET OVERVIEW -->
+                    <div class="dashboard-card budget-overview-card">
+
+                        <div class="card-heading">
+                            <div>
+                                <h3>Your Monthly Budgets</h3>
+                                <p id="budget-month-heading">Track your category-wise spending.</p>
+                            </div>
+                        </div>
+
+                        <div id="budget-summary" class="budget-summary">
+                            <p class="empty-message">Your budget summary will appear here.</p>
+                        </div>
+
+                        <div id="budget-list" class="budget-list">
+                            <p class="empty-message">
+                                No budgets created yet. Create your first monthly budget above.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- ANALYTICS SECTION -->
+                <div class="analytics-grid">
+
+                    <div class="dashboard-card chart-card" id="analytics">
+
+                        <div class="card-heading">
+                            <div>
+                                <h3>Income vs Expenses</h3>
+                                <p>Your financial activity overview</p>
+                            </div>
+
+                            <select id="chart-period">
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly" selected>Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="income-expense-chart"></canvas>
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-card category-card">
+
+                        <div class="card-heading">
+                            <div>
+                                <h3>Expense Breakdown</h3>
+                                <p>Where your money goes</p>
+                            </div>
+                        </div>
+
+                        <div class="category-chart-container">
+                            <canvas id="category-chart"></canvas>
+                        </div>
+
+                        <div id="category-legend" class="category-legend">
+                            <p class="empty-message">No expense data yet.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- TRANSACTIONS -->
+                <div class="dashboard-card transactions-card" id="transactions">
+
+                    <div class="card-heading">
+                        <div>
+                            <h3>Recent Transactions</h3>
+                            <p>Your financial activities</p>
+                        </div>
+
+                        <a href="#transactions" class="view-all-link">
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- SEARCH AND FILTERS -->
+                    <div class="transaction-filters">
+
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input
+                                type="search"
+                                id="transaction-search"
+                                placeholder="Search transactions..."
+                                aria-label="Search transactions by title"
+                            >
+                        </div>
+
+                        <select id="filter-type" aria-label="Filter by transaction type">
+                            <option value="all">All Types</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+
+                        <select id="filter-category" aria-label="Filter by category">
+                            <option value="all">All Categories</option>
+                            <option value="Food">Food & Dining</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Transport">Transportation</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Bills">Bills & Utilities</option>
+                            <option value="Health">Healthcare</option>
+                            <option value="Education">Education</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                        <select id="sort-transactions" aria-label="Sort transactions">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
+
+                        <button type="button" id="clear-filters" class="clear-filters-btn">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Clear
+                        </button>
+
+                    </div>
+
+                    <!-- DATE RANGE FILTER -->
+                    <div class="date-range-filters">
+
+                        <div class="date-filter-group">
+                            <label for="filter-start-date">From Date</label>
+                            <input
+                                type="date"
+                                id="filter-start-date"
+                                aria-label="Filter from date"
+                            >
+                        </div>
+
+                        <div class="date-filter-group">
+                            <label for="filter-end-date">To Date</label>
+                            <input
+                                type="date"
+                                id="filter-end-date"
+                                aria-label="Filter to date"
+                            >
+                        </div>
+
+                        <button type="button" id="apply-date-filter" class="clear-filters-btn">
+                            <i class="fa-solid fa-filter"></i>
+                            Apply Dates
+                        </button>
+
+                        <button type="button" id="reset-date-filter" class="clear-filters-btn">
+                            <i class="fa-solid fa-calendar-xmark"></i>
+                            Reset Dates
+                        </button>
+
+                    </div>
+
+                    <!-- TRANSACTION TABLE -->
+                    <div class="table-container">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Transaction</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="transaction-list">
+                                <tr>
+                                    <td colspan="5" class="empty-message">
+                                        No transactions yet. Add your first transaction!
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- SETTINGS SECTION -->
+                <section class="settings-section" id="settings">
+
+                    <div class="section-heading">
+                        <div>
+                            <h2>Settings</h2>
+                            <p>Customize your SpendWise experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card settings-card">
+
+                        <div class="settings-card-heading">
+                            <div class="settings-icon">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+
+                            <div>
+                                <h3>Currency Preferences</h3>
+                                <p>Choose your preferred display currency.</p>
+                            </div>
+                        </div>
+
+                        <div class="currency-setting">
+
+                            <div class="currency-setting-info">
+                                <label for="currency-select">Display Currency</label>
+                                <p>Select the currency used throughout your dashboard.</p>
+                            </div>
+
+                            <select id="currency-select">
+                                <option value="INR">₹ Indian Rupee (INR)</option>
+                                <option value="USD">$ US Dollar (USD)</option>
+                            </select>
+
+                        </div>
+
+                        <p class="settings-note">
+                            <i class="fa-solid fa-circle-info"></i>
+                            Transactions and budgets are displayed using the latest available INR/USD reference exchange rate.
+                        </p>
+
+                        <p id="currency-save-message" class="currency-save-message" aria-live="polite"></p>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- ADD TRANSACTION MODAL -->
+    <div class="modal-overlay" id="transaction-modal">
+
+        <div class="transaction-modal">
+
+            <div class="modal-header">
+                <div>
+                    <h2>Add Transaction</h2>
+                    <p>Record your income or expenses.</p>
+                </div>
+
+                <button class="close-modal" id="close-modal" type="button" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="transaction-form">
+
+                <div class="form-group">
+                    <label for="transaction-title">Transaction Title</label>
+                    <input
+                        type="text"
+                        id="transaction-title"
+                        placeholder="e.g. Grocery Shopping"
+                        maxlength="60"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Transaction Type</label>
+
+                    <div class="type-selector">
+
+                        <label class="type-option income-option">
+                            <input type="radio" name="transaction-type" value="income" required>
+                            <span>
+                                <i class="fa-solid fa-arrow-down"></i>
+                                Income
+                            </span>
+                        </label>
+
+                        <label class="type-option expense-option">
+                            <input type="radio" name="transaction-type" value="expense">
+                            <span>
+                                <i class="fa-solid fa-arrow-up"></i>
+                                Expense
+                            </span>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction-amount">Amount (₹ INR)</label>
+                    <input
+                        type="number"
+                        id="transaction-amount"
+                        placeholder="Enter amount in INR"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction-category">Category</label>
+
+                    <select id="transaction-category" required>
+                        <option value="">Select Category</option>
+                        <option value="Food">Food & Dining</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Transport">Transportation</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Bills">Bills & Utilities</option>
+                        <option value="Health">Healthcare</option>
+                        <option value="Education">Education</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction-date">Date</label>
+                    <input type="date" id="transaction-date" required>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" id="cancel-modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="save-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Save Transaction
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+   <script src="js/storage.js"></script>
+<script src="js/transaction.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/budget.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
