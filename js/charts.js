@@ -7,9 +7,35 @@
 let incomeExpenseChart = null;
 let categoryChart = null;
 
+/* ========================================
+   THEME COLORS
+======================================== */
+
+function getChartThemeColors() {
+    const isLight =
+        document.documentElement.dataset.theme === "light";
+
+    return {
+        text: isLight ? "#64748b" : "#a1a1aa",
+        grid: isLight
+            ? "rgba(15, 23, 42, 0.08)"
+            : "rgba(255, 255, 255, 0.06)",
+        border: isLight ? "#ffffff" : "#18181b",
+        empty: isLight ? "#cbd5e1" : "#3f3f46"
+    };
+}
+
+/* ========================================
+   CURRENCY
+======================================== */
+
 /* GET CURRENT CURRENCY */
 function getChartCurrency() {
-    return localStorage.getItem("spendwise_currency") || "INR";
+    try {
+        return localStorage.getItem("spendwise_currency") || "INR";
+    } catch (error) {
+        return "INR";
+    }
 }
 
 /* FORMAT CHART VALUES */
@@ -25,6 +51,10 @@ function formatChartCurrency(amount) {
         }
     ).format(Number(amount) || 0);
 }
+
+/* ========================================
+   CHART PERIOD
+======================================== */
 
 /* GET SELECTED CHART PERIOD */
 function getSelectedChartPeriod() {
@@ -101,6 +131,10 @@ function calculateChartTotal(transactions, type) {
     return total;
 }
 
+/* ========================================
+   DAILY CHART DATA
+======================================== */
+
 /* GET DAILY INCOME AND EXPENSE DATA */
 function getDailyChartData(transactions) {
     const now = new Date();
@@ -135,6 +169,10 @@ function getDailyChartData(transactions) {
 
     return { labels, incomeData, expenseData };
 }
+
+/* ========================================
+   WEEKLY CHART DATA
+======================================== */
 
 /* GET WEEKLY INCOME AND EXPENSE DATA */
 function getWeeklyChartData(transactions) {
@@ -179,6 +217,10 @@ function getWeeklyChartData(transactions) {
     return { labels, incomeData, expenseData };
 }
 
+/* ========================================
+   YEARLY CHART DATA
+======================================== */
+
 /* GET YEARLY INCOME AND EXPENSE DATA */
 function getYearlyChartData(transactions) {
     const now = new Date();
@@ -214,11 +256,17 @@ function getYearlyChartData(transactions) {
     return { labels, incomeData, expenseData };
 }
 
+/* ========================================
+   INCOME VS EXPENSE CHART
+======================================== */
+
 /* CREATE INCOME VS EXPENSE CHART */
 function createIncomeExpenseChart() {
     const canvas = document.getElementById("income-expense-chart");
 
     if (!canvas || typeof Chart === "undefined") return;
+
+    const themeColors = getChartThemeColors();
 
     const transactions = getTransactions();
     const period = getSelectedChartPeriod();
@@ -270,7 +318,7 @@ function createIncomeExpenseChart() {
                 legend: {
                     position: "top",
                     labels: {
-                        color: "#a1a1aa",
+                        color: themeColors.text,
                         usePointStyle: true,
                         padding: 20
                     }
@@ -297,17 +345,17 @@ function createIncomeExpenseChart() {
                         display: false
                     },
                     ticks: {
-                        color: "#a1a1aa"
+                        color: themeColors.text
                     }
                 },
 
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: "rgba(255,255,255,0.06)"
+                        color: themeColors.grid
                     },
                     ticks: {
-                        color: "#a1a1aa",
+                        color: themeColors.text,
                         callback: function (value) {
                             return formatChartCurrency(value);
                         }
@@ -324,11 +372,17 @@ function createIncomeExpenseChart() {
     incomeExpenseChart = new Chart(canvas, chartConfig);
 }
 
+/* ========================================
+   CATEGORY BREAKDOWN CHART
+======================================== */
+
 /* CREATE CATEGORY BREAKDOWN CHART */
 function createCategoryChart() {
     const canvas = document.getElementById("category-chart");
 
     if (!canvas || typeof Chart === "undefined") return;
+
+    const themeColors = getChartThemeColors();
 
     const transactions = getTransactions();
     const period = getSelectedChartPeriod();
@@ -391,10 +445,10 @@ function createCategoryChart() {
                             "#14b8a6",
                             "#a78bfa"
                         ]
-                        : ["#3f3f46"],
+                        : [themeColors.empty],
 
                     borderWidth: 2,
-                    borderColor: "#18181b",
+                    borderColor: themeColors.border,
                     hoverOffset: 8
                 }
             ]
@@ -411,7 +465,7 @@ function createCategoryChart() {
                     position: "bottom",
 
                     labels: {
-                        color: "#a1a1aa",
+                        color: themeColors.text,
                         usePointStyle: true,
                         padding: 15
                     }
@@ -442,11 +496,19 @@ function createCategoryChart() {
     categoryChart = new Chart(canvas, chartConfig);
 }
 
+/* ========================================
+   UPDATE ALL CHARTS
+======================================== */
+
 /* UPDATE ALL CHARTS */
 function updateCharts() {
     createIncomeExpenseChart();
     createCategoryChart();
 }
+
+/* ========================================
+   INITIALIZE CHARTS
+======================================== */
 
 /* INITIALIZE CHARTS */
 document.addEventListener("DOMContentLoaded", function () {
@@ -457,4 +519,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (periodSelect) {
         periodSelect.addEventListener("change", updateCharts);
     }
+});
+
+/* REFRESH CHARTS WHEN THEME CHANGES */
+window.addEventListener("spendwise:themechange", function () {
+    updateCharts();
 });

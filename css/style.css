@@ -1,12 +1,16 @@
 
 /* ==============================
-   GLOBAL STYLES
+   GLOBAL STYLES & THEME VARIABLES
 ================================= */
 
 :root {
     --bg-color: #0f172a;
     --sidebar-color: #111c31;
     --card-color: #172338;
+    --surface-color: #0f172a;
+    --input-color: #0f172a;
+    --input-border: #334155;
+    --table-header: #1e293b;
     --border-color: #26344c;
     --primary-color: #8b5cf6;
     --primary-hover: #7c3aed;
@@ -14,6 +18,31 @@
     --muted-color: #94a3b8;
     --green-color: #22c55e;
     --red-color: #f87171;
+    --placeholder-color: #64748b;
+    --secondary-text: #cbd5e1;
+    --progress-track: #26344c;
+    --transition-theme: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+    --bg-color: #f4f6fb;
+    --sidebar-color: #ffffff;
+    --card-color: #ffffff;
+    --surface-color: #f8fafc;
+    --input-color: #ffffff;
+    --input-border: #dbe1ec;
+    --table-header: #eef2f7;
+    --border-color: #e2e8f0;
+    --primary-color: #7c3aed;
+    --primary-hover: #6d28d9;
+    --text-color: #1e293b;
+    --muted-color: #64748b;
+    --green-color: #16a34a;
+    --red-color: #dc2626;
+    --placeholder-color: #94a3b8;
+    --secondary-text: #475569;
+    --progress-track: #e2e8f0;
 }
 
 * {
@@ -27,6 +56,7 @@ body {
     background: var(--bg-color);
     color: var(--text-color);
     min-height: 100vh;
+    transition: var(--transition-theme);
 }
 
 button,
@@ -67,6 +97,7 @@ a {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    transition: var(--transition-theme);
 }
 
 .logo {
@@ -92,7 +123,7 @@ a {
 }
 
 .nav-heading {
-    color: #64748b;
+    color: var(--muted-color);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.2px;
@@ -124,6 +155,11 @@ a {
     color: #a78bfa;
 }
 
+:root[data-theme="light"] .nav-link:hover,
+:root[data-theme="light"] .nav-link.active {
+    color: #7c3aed;
+}
+
 .sidebar-bottom {
     margin-top: auto;
     border-top: 1px solid var(--border-color);
@@ -144,6 +180,7 @@ a {
     display: grid;
     place-items: center;
     font-weight: 700;
+    color: white;
 }
 
 .user-info {
@@ -212,8 +249,12 @@ a {
 }
 
 .icon-btn:hover {
-    color: white;
+    color: var(--primary-color);
     border-color: var(--primary-color);
+}
+
+.theme-toggle-btn {
+    color: var(--primary-color);
 }
 
 .header-date {
@@ -291,12 +332,12 @@ a {
     border: 1px solid var(--border-color);
     padding: 22px;
     border-radius: 14px;
-    transition: 0.3s;
+    transition: var(--transition-theme);
 }
 
 .summary-card:hover {
     transform: translateY(-4px);
-    border-color: #475569;
+    border-color: #8b5cf6;
 }
 
 .card-top {
@@ -386,7 +427,7 @@ a {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 9px;
-    color: #cbd5e1;
+    color: var(--secondary-text);
 }
 
 .budget-form input,
@@ -395,8 +436,8 @@ a {
     min-width: 0;
     min-height: 44px;
     padding: 12px;
-    background: #0f172a;
-    border: 1px solid #334155;
+    background: var(--input-color);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
     color: var(--text-color);
     font-size: 12px;
@@ -411,11 +452,11 @@ a {
 }
 
 .budget-form input::placeholder {
-    color: #64748b;
+    color: var(--placeholder-color);
 }
 
 .budget-form input[type="month"] {
-    color-scheme: dark;
+    color-scheme: light dark;
 }
 
 .budget-form select {
@@ -423,8 +464,8 @@ a {
 }
 
 .budget-form select option {
-    background: #172338;
-    color: white;
+    background: var(--card-color);
+    color: var(--text-color);
 }
 
 .budget-form > button {
@@ -449,7 +490,7 @@ a {
 
 .budget-summary-card {
     padding: 18px;
-    background: #0f172a;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: 11px;
     min-width: 0;
@@ -468,7 +509,7 @@ a {
 }
 
 .budget-summary-card .summary-icon {
-    color: #a78bfa;
+    color: var(--primary-color);
     margin-bottom: 12px;
     font-size: 16px;
 }
@@ -482,14 +523,14 @@ a {
 .budget-card {
     min-width: 0;
     padding: 20px;
-    background: #0f172a;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s, transform 0.3s, background-color 0.3s;
 }
 
 .budget-card:hover {
-    border-color: #475569;
+    border-color: var(--primary-color);
     transform: translateY(-2px);
 }
 
@@ -537,7 +578,7 @@ a {
     width: 100%;
     height: 9px;
     overflow: hidden;
-    background: #26344c;
+    background: var(--progress-track);
     border-radius: 20px;
     margin: 14px 0 10px;
 }
@@ -655,6 +696,7 @@ a {
     border-radius: 14px;
     padding: 23px;
     min-width: 0;
+    transition: var(--transition-theme);
 }
 
 .card-heading {
@@ -676,13 +718,18 @@ a {
 }
 
 .card-heading select {
-    background: #1e293b;
+    background: var(--input-color);
     color: var(--text-color);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--input-border);
     padding: 9px 12px;
     border-radius: 7px;
     outline: none;
     font-size: 11px;
+}
+
+.card-heading select option {
+    background: var(--card-color);
+    color: var(--text-color);
 }
 
 .chart-container {
@@ -718,7 +765,7 @@ a {
 }
 
 .view-all-link {
-    color: #a78bfa;
+    color: var(--primary-color);
     font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
@@ -742,7 +789,7 @@ table {
 }
 
 thead {
-    background: #1e293b;
+    background: var(--table-header);
 }
 
 th {
@@ -780,7 +827,7 @@ tbody tr:last-child td {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #0f172a;
+    background: var(--input-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 0 12px;
@@ -809,14 +856,14 @@ tbody tr:last-child td {
 }
 
 .search-box input::placeholder {
-    color: #64748b;
+    color: var(--placeholder-color);
 }
 
 .transaction-filters select {
     width: 100%;
     min-width: 0;
     padding: 12px 10px;
-    background: #0f172a;
+    background: var(--input-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-color);
@@ -831,8 +878,8 @@ tbody tr:last-child td {
 }
 
 .transaction-filters select option {
-    background: #172338;
-    color: white;
+    background: var(--card-color);
+    color: var(--text-color);
 }
 
 .clear-filters-btn {
@@ -844,7 +891,7 @@ tbody tr:last-child td {
     background: rgba(139, 92, 246, 0.12);
     border: 1px solid rgba(139, 92, 246, 0.3);
     border-radius: 8px;
-    color: #c4b5fd;
+    color: var(--primary-color);
     font-size: 11px;
     font-weight: 600;
     white-space: nowrap;
@@ -931,8 +978,8 @@ td.expense {
     max-width: 470px;
     max-height: 90vh;
     overflow-y: auto;
-    background: #172338;
-    border: 1px solid #334155;
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 27px;
     animation: modalAppear 0.25s ease;
@@ -976,7 +1023,7 @@ td.expense {
 }
 
 .close-modal:hover {
-    color: white;
+    color: var(--primary-color);
     transform: rotate(90deg);
 }
 
@@ -994,15 +1041,15 @@ td.expense {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 9px;
-    color: #cbd5e1;
+    color: var(--secondary-text);
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
     padding: 13px;
-    background: #0f172a;
-    border: 1px solid #334155;
+    background: var(--input-color);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
     color: var(--text-color);
     font-size: 13px;
@@ -1017,11 +1064,11 @@ td.expense {
 }
 
 .form-group input::placeholder {
-    color: #64748b;
+    color: var(--placeholder-color);
 }
 
 .form-group input[type="date"] {
-    color-scheme: dark;
+    color-scheme: light dark;
 }
 
 .form-group select {
@@ -1029,8 +1076,8 @@ td.expense {
 }
 
 .form-group select option {
-    background: #172338;
-    color: white;
+    background: var(--card-color);
+    color: var(--text-color);
 }
 
 
@@ -1054,7 +1101,7 @@ td.expense {
     align-items: center;
     gap: 9px;
     padding: 13px;
-    border: 1px solid #334155;
+    border: 1px solid var(--input-border);
     border-radius: 8px;
     color: var(--muted-color);
     font-size: 13px;
@@ -1100,8 +1147,8 @@ td.expense {
 
 .cancel-btn {
     background: transparent;
-    border: 1px solid #334155;
-    color: #cbd5e1;
+    border: 1px solid var(--input-border);
+    color: var(--secondary-text);
 }
 
 .save-btn {
@@ -1115,60 +1162,13 @@ td.expense {
 }
 
 .cancel-btn:hover {
-    background: #26344c;
+    background: var(--surface-color);
 }
 
 
 /* ==============================
-   RESPONSIVE STYLING
-================================= */
-
-@media (max-width: 1100px) {
-    .transaction-filters {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .search-box {
-        grid-column: 1 / -1;
-    }
-}
-
-@media (max-width: 768px) {
-    .transaction-filters {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .clear-filters-btn {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .transaction-filters {
-        grid-template-columns: 1fr;
-    }
-
-    .search-box {
-        grid-column: auto;
-    }
-
-    .transaction-modal {
-        padding: 20px;
-    }
-
-    .modal-actions {
-        flex-direction: column-reverse;
-    }
-
-    .modal-actions button {
-        width: 100%;
-    }
-}
-
-
-/* ========================================
    DATE RANGE FILTERS
-======================================== */
+================================= */
 
 .date-range-filters {
     display: flex;
@@ -1177,8 +1177,8 @@ td.expense {
     gap: 12px;
     margin: 18px 0 22px;
     padding: 16px;
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
 }
 
@@ -1191,7 +1191,7 @@ td.expense {
 }
 
 .date-filter-group label {
-    color: #a9a8bd;
+    color: var(--muted-color);
     font-size: 12px;
     font-weight: 600;
 }
@@ -1200,24 +1200,27 @@ td.expense {
     width: 100%;
     min-height: 42px;
     padding: 10px 12px;
-    color: #ffffff;
-    background: #202039;
-    border: 1px solid #383854;
+    color: var(--text-color);
+    background: var(--input-color);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
     outline: none;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color-scheme: dark;
+    color-scheme: light dark;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .date-filter-group input[type="date"]:focus {
-    border-color: #8b5cf6;
+    border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
 .date-filter-group input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
+}
+
+:root:not([data-theme="light"]) .date-filter-group input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
 
@@ -1246,229 +1249,22 @@ td.expense {
 }
 
 #reset-date-filter {
-    color: #c4b5fd;
+    color: var(--primary-color);
     background: transparent;
-    border: 1px solid #514477;
+    border: 1px solid rgba(139, 92, 246, 0.4);
     border-radius: 8px;
 }
 
 #reset-date-filter:hover {
-    color: #ffffff;
-    background: rgba(124, 58, 237, 0.15);
-    border-color: #8b5cf6;
-}
-
-
-/* DATE FILTER RESPONSIVENESS */
-
-@media (max-width: 768px) {
-    .date-range-filters {
-        gap: 12px;
-    }
-
-    .date-filter-group {
-        flex: 1 1 calc(50% - 12px);
-    }
-
-    .date-range-filters button {
-        flex: 1 1 calc(50% - 12px);
-    }
-}
-
-@media (max-width: 480px) {
-    .date-range-filters {
-        padding: 12px;
-        gap: 10px;
-    }
-
-    .date-filter-group {
-        flex: 1 1 100%;
-    }
-
-    .date-range-filters button {
-        flex: 1 1 100%;
-    }
-}
-
-
-/* ========================================
-   SPENDWISE SETTINGS SECTION
-======================================== */
-
-#settings {
-    margin: 30px 35px;
-    padding: 25px;
-    background: var(--card-color);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-}
-
-#settings .section-heading {
-    margin-bottom: 22px;
-}
-
-#settings .section-heading h2 {
-    font-size: 20px;
-    color: var(--text-color);
-}
-
-#settings .section-heading p {
-    color: var(--muted-color);
-    font-size: 12px;
-    margin-top: 7px;
-}
-
-
-/* SETTINGS CARD */
-
-.settings-card {
-    max-width: 650px;
-    padding: 24px;
-    background: #0f172a;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    transition: border-color 0.3s ease;
-}
-
-.settings-card:hover {
-    border-color: #475569;
-}
-
-.settings-card h3 {
-    font-size: 16px;
-    margin-bottom: 9px;
-    color: var(--text-color);
-}
-
-.settings-card > p {
-    color: var(--muted-color);
-    font-size: 12px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-}
-
-
-/* CURRENCY SETTING */
-
-.currency-setting {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 380px;
-}
-
-.currency-setting label {
-    color: #cbd5e1;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-#currency-select {
-    width: 100%;
-    min-height: 46px;
-    padding: 12px 14px;
-    background: #172338;
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 9px;
-    outline: none;
-    font-size: 13px;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-#currency-select:hover {
-    border-color: #64748b;
-}
-
-#currency-select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
-}
-
-#currency-select option {
-    background: #172338;
     color: white;
+    background: rgba(124, 58, 237, 0.85);
+    border-color: var(--primary-color);
 }
 
 
-/* SAVE MESSAGE */
-
-#currency-save-message {
-    min-height: 18px;
-    margin-top: 13px;
-    color: var(--green-color);
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-
-/* INFORMATION NOTE */
-
-.settings-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    margin-top: 20px;
-    padding: 14px;
-    background: rgba(139, 92, 246, 0.08);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-    border-radius: 9px;
-}
-
-.settings-note i {
-    color: #a78bfa;
-    font-size: 15px;
-    margin-top: 2px;
-}
-
-.settings-note p {
-    color: var(--muted-color);
-    font-size: 11px;
-    line-height: 1.7;
-}
-
-
-/* SETTINGS RESPONSIVENESS */
-
-@media (max-width: 768px) {
-    #settings {
-        margin: 25px 20px;
-        padding: 18px;
-    }
-
-    .settings-card {
-        padding: 18px;
-    }
-
-    .currency-setting {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    #settings {
-        margin: 20px 12px;
-        padding: 14px;
-    }
-
-    .settings-card {
-        padding: 15px;
-    }
-
-    #currency-select {
-        min-height: 44px;
-    }
-
-    .settings-note {
-        padding: 11px;
-    }
-}
-
-
-/* ========================================
-   SPENDWISE SETTINGS SECTION
-======================================== */
+/* ==============================
+   SETTINGS SECTION
+================================= */
 
 .settings-section {
     margin-top: 30px;
@@ -1479,23 +1275,17 @@ td.expense {
     margin-bottom: 20px;
 }
 
-
-/* SETTINGS CARD */
-
 .settings-card {
     padding: 25px;
     background: var(--card-color);
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    transition: border-color 0.3s ease;
+    transition: var(--transition-theme);
 }
 
 .settings-card:hover {
-    border-color: #475569;
+    border-color: var(--primary-color);
 }
-
-
-/* SETTINGS CARD HEADING */
 
 .settings-card-heading {
     display: flex;
@@ -1511,7 +1301,7 @@ td.expense {
     place-items: center;
     flex-shrink: 0;
     background: rgba(139, 92, 246, 0.15);
-    color: #a78bfa;
+    color: var(--primary-color);
     border-radius: 12px;
     font-size: 18px;
 }
@@ -1527,16 +1317,13 @@ td.expense {
     font-size: 12px;
 }
 
-
-/* CURRENCY SETTING */
-
 .currency-setting {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 25px;
     padding: 20px;
-    background: #0f172a;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: 10px;
 }
@@ -1564,7 +1351,7 @@ td.expense {
     max-width: 100%;
     min-height: 44px;
     padding: 11px 13px;
-    background: #172338;
+    background: var(--input-color);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -1575,7 +1362,7 @@ td.expense {
 }
 
 #currency-select:hover {
-    border-color: #64748b;
+    border-color: var(--primary-color);
 }
 
 #currency-select:focus {
@@ -1584,12 +1371,9 @@ td.expense {
 }
 
 #currency-select option {
-    background: #172338;
-    color: white;
+    background: var(--card-color);
+    color: var(--text-color);
 }
-
-
-/* SETTINGS NOTE */
 
 .settings-note {
     display: flex;
@@ -1606,13 +1390,10 @@ td.expense {
 }
 
 .settings-note i {
-    color: #a78bfa;
+    color: var(--primary-color);
     font-size: 13px;
     margin-top: 3px;
 }
-
-
-/* CURRENCY SAVE MESSAGE */
 
 .currency-save-message {
     min-height: 18px;
@@ -1623,9 +1404,41 @@ td.expense {
 }
 
 
-/* SETTINGS RESPONSIVE DESIGN */
+/* ==============================
+   RESPONSIVE STYLING
+================================= */
+
+@media (max-width: 1100px) {
+    .transaction-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .search-box {
+        grid-column: 1 / -1;
+    }
+}
 
 @media (max-width: 768px) {
+    .transaction-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .clear-filters-btn {
+        width: 100%;
+    }
+
+    .date-range-filters {
+        gap: 12px;
+    }
+
+    .date-filter-group {
+        flex: 1 1 calc(50% - 12px);
+    }
+
+    .date-range-filters button {
+        flex: 1 1 calc(50% - 12px);
+    }
+
     .settings-card {
         padding: 20px;
     }
@@ -1642,6 +1455,39 @@ td.expense {
 }
 
 @media (max-width: 480px) {
+    .transaction-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        grid-column: auto;
+    }
+
+    .transaction-modal {
+        padding: 20px;
+    }
+
+    .modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .modal-actions button {
+        width: 100%;
+    }
+
+    .date-range-filters {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .date-filter-group {
+        flex: 1 1 100%;
+    }
+
+    .date-range-filters button {
+        flex: 1 1 100%;
+    }
+
     .settings-card {
         padding: 15px;
     }
@@ -1657,5 +1503,81 @@ td.expense {
 
     .currency-setting {
         padding: 15px;
+    }
+
+    #currency-select {
+        min-height: 44px;
+    }
+
+    .settings-note {
+        padding: 11px;
+    }
+}
+/* ==============================
+   THEME SETTINGS BUTTON
+================================= */
+
+.theme-setting-btn {
+    min-width: 145px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background: var(--input-color);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.theme-setting-btn i {
+    color: var(--primary-color);
+    font-size: 15px;
+}
+
+.theme-setting-btn:hover {
+    border-color: var(--primary-color);
+    background: var(--surface-color);
+    transform: translateY(-2px);
+}
+
+.theme-setting-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+.theme-toggle-btn {
+    flex-shrink: 0;
+}
+
+/* Smooth theme transitions */
+
+body,
+.sidebar,
+.dashboard-card,
+.summary-card,
+.settings-card,
+.budget-card,
+.budget-summary-card,
+.transaction-modal,
+.currency-setting,
+.date-range-filters,
+.icon-btn {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* Mobile theme button */
+
+@media (max-width: 768px) {
+    .theme-setting-btn {
+        width: 100%;
     }
 }

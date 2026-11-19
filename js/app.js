@@ -7,9 +7,146 @@
 const EXCHANGE_RATE_API =
     "https://api.frankfurter.dev/v2/rate/INR/USD";
 
+const THEME_STORAGE_KEY = "spendwise-theme";
+
 let exchangeRateRequest = null;
 
-/* SET CURRENT DATE */
+/* ========================================
+   LIGHT / DARK THEME
+======================================== */
+
+/* APPLY SELECTED THEME */
+function applyTheme(theme, savePreference = true) {
+    const selectedTheme = theme === "light" ? "light" : "dark";
+
+    document.documentElement.dataset.theme = selectedTheme;
+
+    // Keep compatibility with existing CSS if needed.
+    document.body.classList.toggle(
+        "light-mode",
+        selectedTheme === "light"
+    );
+
+    if (savePreference) {
+        try {
+            localStorage.setItem(
+                THEME_STORAGE_KEY,
+                selectedTheme
+            );
+        } catch (error) {
+            console.error("Unable to save theme preference:", error);
+        }
+    }
+
+    updateThemeButtons(selectedTheme);
+
+    // Notify other components, including charts.
+    window.dispatchEvent(
+        new CustomEvent("spendwise:themechange", {
+            detail: { theme: selectedTheme }
+        })
+    );
+}
+
+/* UPDATE BOTH THEME BUTTONS */
+function updateThemeButtons(theme) {
+    const isLight = theme === "light";
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeToggleIcon = document.getElementById("theme-toggle-icon");
+
+    const settingsToggle = document.getElementById(
+        "theme-setting-toggle"
+    );
+    const settingsIcon = document.getElementById(
+        "theme-setting-icon"
+    );
+    const settingsLabel = document.getElementById(
+        "theme-setting-label"
+    );
+
+    const actionLabel = isLight
+        ? "Switch to dark mode"
+        : "Switch to light mode";
+
+    if (themeToggle) {
+        themeToggle.setAttribute("aria-label", actionLabel);
+        themeToggle.setAttribute("title", actionLabel);
+        themeToggle.setAttribute("aria-pressed", String(isLight));
+    }
+
+    if (themeToggleIcon) {
+        themeToggleIcon.className = isLight
+            ? "fa-solid fa-moon"
+            : "fa-solid fa-sun";
+    }
+
+    if (settingsToggle) {
+        settingsToggle.setAttribute("aria-label", actionLabel);
+        settingsToggle.setAttribute("aria-pressed", String(isLight));
+    }
+
+    if (settingsIcon) {
+        settingsIcon.className = isLight
+            ? "fa-solid fa-moon"
+            : "fa-solid fa-sun";
+    }
+
+    if (settingsLabel) {
+        settingsLabel.textContent = isLight
+            ? "Dark Mode"
+            : "Light Mode";
+    }
+}
+
+/* TOGGLE BETWEEN LIGHT AND DARK */
+function toggleTheme() {
+    const currentTheme =
+        document.documentElement.dataset.theme || "dark";
+
+    const newTheme = currentTheme === "dark"
+        ? "light"
+        : "dark";
+
+    applyTheme(newTheme);
+}
+
+/* INITIALIZE THEME SETTINGS */
+function initializeThemeSettings() {
+    let savedTheme = "dark";
+
+    try {
+        savedTheme =
+            localStorage.getItem(THEME_STORAGE_KEY) || "dark";
+    } catch (error) {
+        console.error("Unable to load theme preference:", error);
+    }
+
+    if (!["light", "dark"].includes(savedTheme)) {
+        savedTheme = "dark";
+    }
+
+    // Apply the saved theme without rewriting storage.
+    applyTheme(savedTheme, false);
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const settingsToggle = document.getElementById(
+        "theme-setting-toggle"
+    );
+
+    if (themeToggle) {
+        themeToggle.addEventListener("click", toggleTheme);
+    }
+
+    if (settingsToggle) {
+        settingsToggle.addEventListener("click", toggleTheme);
+    }
+}
+
+/* ========================================
+   SET CURRENT DATE
+======================================== */
+
 function setCurrentDate() {
     const dateElement = document.getElementById("current-date");
 
@@ -25,7 +162,10 @@ function setCurrentDate() {
     });
 }
 
-/* SIDEBAR NAVIGATION */
+/* ========================================
+   SIDEBAR NAVIGATION
+======================================== */
+
 function initializeNavigation() {
     const navigationLinks = document.querySelectorAll(".nav-link");
 
@@ -65,7 +205,10 @@ function initializeNavigation() {
     });
 }
 
-/* NOTIFICATION BUTTON */
+/* ========================================
+   NOTIFICATION BUTTON
+======================================== */
+
 function initializeNotifications() {
     const notificationButton =
         document.querySelector(".icon-btn[aria-label='Notifications']") ||
@@ -77,6 +220,10 @@ function initializeNotifications() {
         alert("You're all caught up! No new notifications.");
     });
 }
+
+/* ========================================
+   CURRENCY SETTINGS
+======================================== */
 
 /* GET CURRENCY SYMBOL */
 function getCurrencySymbol(currency) {
@@ -294,8 +441,13 @@ function initializeCurrencySettings() {
     });
 }
 
-/* INITIALIZE APPLICATION */
+/* ========================================
+   INITIALIZE APPLICATION
+======================================== */
+
 function initializeSpendWise() {
+    initializeThemeSettings();
+
     setCurrentDate();
     initializeNavigation();
     initializeNotifications();
